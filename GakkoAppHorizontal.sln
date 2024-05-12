@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HorizontalSlice", "HorizontalSlice", "{06260028-C25E-4A0F-81BC-AC0DA95EEADD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GakkoAppHorizontal", "GakkoAppHorizontal\GakkoAppHorizontal.csproj", "{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{03707DD0-6875-4FD0-89F6-4B1480ACF7AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FEBA3371-B96B-4A29-AE3E-D0EF06C5271C} = {06260028-C25E-4A0F-81BC-AC0DA95EEADD}
+	EndGlobalSection
+EndGlobal
