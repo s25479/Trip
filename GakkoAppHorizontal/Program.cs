@@ -1,3 +1,4 @@
+using GakkoHorizontalSlice.Services;
 
 public class Program
 {
@@ -10,7 +11,8 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
-        
+        builder.Services.AddScoped<TripsService>();
+
         var app = builder.Build();
 
         //Configuring the HTTP request pipeline

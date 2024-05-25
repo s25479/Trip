@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using GakkoHorizontalSlice.Models;
 using Microsoft.EntityFrameworkCore;
+using GakkoHorizontalSlice.Models;
 
 namespace GakkoHorizontalSlice.Context;
 
@@ -26,7 +26,7 @@ public partial class ApbdContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
-            .UseSqlServer("Data Source=localhost;Initial Catalog=APBD;User ID=a;Password=b;Encrypt=False")
+            .UseSqlServer("Data Source=db-mssql;Initial Catalog=2019SBD;Integrated Security=True;Trust Server Certificate=True")
             .LogTo(Console.WriteLine, LogLevel.Information);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

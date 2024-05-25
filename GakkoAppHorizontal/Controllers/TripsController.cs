@@ -1,21 +1,25 @@
-using GakkoHorizontalSlice.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using GakkoHorizontalSlice.Context;
+using GakkoHorizontalSlice.Models;
+using GakkoHorizontalSlice.Services;
 
 namespace GakkoHorizontalSlice.Controllers;
 
-[Route("api/")]
+[Route("api/trips")]
 [ApiController]
 public class TripsController : ControllerBase
 {
-    public TripsController()
+    private TripsService service;
+
+    public TripsController(TripsService service)
     {
+        this.service = service;
     }
     
     [HttpGet]
-	[Route("trips")]
-    public IActionResult GetTrips()
+    public async Task<ActionResult<IEnumerable<TripDTO>>> GetTrips()
     {
-        return Ok();
+        return Ok(await service.GetTrips());
     }
 }
