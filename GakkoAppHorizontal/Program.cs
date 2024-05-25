@@ -12,6 +12,7 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
         builder.Services.AddScoped<TripsService>();
+        builder.Services.AddScoped<ClientsService>();
 
         var app = builder.Build();
 
