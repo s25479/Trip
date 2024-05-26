@@ -26,11 +26,11 @@ public class TripsService
                 DateFrom = trip.DateFrom,
                 DateTo = trip.DateTo,
                 MaxPeople = trip.MaxPeople,
-                Countries = trip.IdCountries.Select(country => new CountryDTO(){ Name = country.Name }),
+                Countries = trip.Countries.Select(country => new CountryDTO(){ Name = country.Name }),
                 Clients = trip.ClientTrips.Select(clientTrip => new ClientDTO()
                 {
-                    FirstName = clientTrip.IdClientNavigation.FirstName,
-                    LastName = clientTrip.IdClientNavigation.LastName
+                    FirstName = clientTrip.Client.FirstName,
+                    LastName = clientTrip.Client.LastName
                 })
             })
             .ToListAsync();
@@ -55,7 +55,7 @@ public class TripsService
             dbContext.Clients.Add(client);
         } else {
             var clientTrip = client.ClientTrips
-                .SingleOrDefault(clientTrip => clientTrip.IdTripNavigation.IdTrip == signUpClientForTripDTO.IdTrip);
+                .SingleOrDefault(clientTrip => clientTrip.Trip.IdTrip == signUpClientForTripDTO.IdTrip);
             if (clientTrip != null)
                 throw new ValidationException("Client already signed up for this trip");
         }

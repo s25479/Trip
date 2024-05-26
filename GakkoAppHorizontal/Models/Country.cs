@@ -9,5 +9,5 @@ public partial class Country
 
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<Trip> IdTrips { get; set; } = new List<Trip>();
+    public virtual ICollection<Trip> Trips { get; set; } = new List<Trip>();
 }

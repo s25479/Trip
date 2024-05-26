@@ -54,12 +54,12 @@ public partial class ApbdContext : DbContext
             entity.Property(e => e.RegisteredAt).HasColumnType("datetime");
             entity.Property(e => e.PaymentDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.IdClientNavigation).WithMany(p => p.ClientTrips)
+            entity.HasOne(d => d.Client).WithMany(p => p.ClientTrips)
                 .HasForeignKey(d => d.IdClient)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Table_5_Client");
 
-            entity.HasOne(d => d.IdTripNavigation).WithMany(p => p.ClientTrips)
+            entity.HasOne(d => d.Trip).WithMany(p => p.ClientTrips)
                 .HasForeignKey(d => d.IdTrip)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Table_5_Trip");
@@ -74,7 +74,7 @@ public partial class ApbdContext : DbContext
             entity.Property(e => e.IdCountry).ValueGeneratedNever();
             entity.Property(e => e.Name).HasMaxLength(120);
 
-            entity.HasMany(d => d.IdTrips).WithMany(p => p.IdCountries)
+            entity.HasMany(d => d.Trips).WithMany(p => p.Countries)
                 .UsingEntity<Dictionary<string, object>>(
                     "CountryTrip",
                     l => l.HasOne<Trip>().WithMany().HasForeignKey("IdTrip").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("Country_Trip_Trip"),
