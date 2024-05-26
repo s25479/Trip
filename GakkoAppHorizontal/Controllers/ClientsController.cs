@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GakkoHorizontalSlice.Context;
+using GakkoHorizontalSlice.Exceptions;
 using GakkoHorizontalSlice.Models;
 using GakkoHorizontalSlice.Services;
 
@@ -20,7 +21,13 @@ public class ClientsController : ControllerBase
     [HttpDelete("{idClient:int}")]
     public async Task<IActionResult> DeleteClient(int idClient)
     {
-        await service.DeleteClient(idClient);
-        return NoContent();
+		try {
+			await service.DeleteClient(idClient);
+			return NoContent();
+		} catch (ValidationException e) {
+			return BadRequest(e.Message);
+		} catch (Exception) {
+			return StatusCode(StatusCodes.Status500InternalServerError);
+		}
     }
 }

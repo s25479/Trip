@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GakkoHorizontalSlice.Context;
+using GakkoHorizontalSlice.Exceptions;
 using GakkoHorizontalSlice.Models;
 
 namespace GakkoHorizontalSlice.Services;
@@ -35,4 +36,42 @@ public class TripsService
             .ToListAsync();
         return trips;
     }
+	
+	public async Task SignUpClientForTrip(SignUpClientForTripDTO signUpClientForTripDTO)
+	{
+		var client = await dbContext.Clients
+			.SingleOrDefaultAsync(client => client.Pesel == signUpClientForTripDTO.Pesel);
+			
+		if (client == null) {
+            client = new Client()
+			{
+				FirstName = signUpClientForTripDTO.FirstName,
+				LastName = signUpClientForTripDTO.LastName,
+				Email = signUpClientForTripDTO.Email,
+				Telephone = signUpClientForTripDTO.Telephone,
+				Pesel = signUpClientForTripDTO.Pesel
+			};
+            
+            dbContext.Clients.Add(client);
+		} else {
+			var clientTrip = client.ClientTrips.
+				SingleOrDefault(clientTrip => clientTrip.IdTripNavigation.IdTrip == signUpClientForTripDTO.IdTrip);
+			if (clientTrip != null)
+				throw new ValidationException("Client already signed up for this trip");
+		}
+        
+        var trip = await dbContext.Trips.SingleOrDefaultAsync(trip => trip.IdTrip == signUpClientForTripDTO.IdTrip);
+        if (trip == null)
+            throw new ValidationException("Trip does not exist");
+        
+        dbContext.ClientTrips.Add(new ClientTrip()
+        {
+            IdClient = client.IdClient,
+            IdTrip = signUpClientForTripDTO.IdTrip,
+            RegisteredAt = DateTime.Now,
+            PaymentDate = signUpClientForTripDTO.PaymentDate
+        });
+        
+        await dbContext.SaveChangesAsync();
+	}
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GakkoHorizontalSlice.Context;
+using GakkoHorizontalSlice.Exceptions;
 using GakkoHorizontalSlice.Models;
 
 namespace GakkoHorizontalSlice.Services;
@@ -16,15 +17,15 @@ public class ClientsService
 
     public async Task DeleteClient(int idClient)
     {
-        var client = await dbContext.Clients.FirstOrDefaultAsync(client => client.IdClient == idClient);
+        var client = await dbContext.Clients.SingleOrDefaultAsync(client => client.IdClient == idClient);
         
         if (client == null)
-            return;
+			throw new ValidationException("Client does not exist");
 
-        if (client.ClientTrips.Count == 0)
-            return;
+        if (client.ClientTrips.Count > 0)
+            throw new ValidationException("Client has assigned trips");
         
         dbContext.Clients.Remove(client);
-        dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 }

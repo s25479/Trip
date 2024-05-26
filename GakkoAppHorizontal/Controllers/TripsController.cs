@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GakkoHorizontalSlice.Context;
+using GakkoHorizontalSlice.Exceptions;
 using GakkoHorizontalSlice.Models;
 using GakkoHorizontalSlice.Services;
 
@@ -20,6 +21,23 @@ public class TripsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TripDTO>>> GetTrips()
     {
-        return Ok(await service.GetTrips());
+        try {
+            return Ok(await service.GetTrips());
+        } catch (Exception) {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+	
+	[HttpPost("{idTrip:int}/clients")]
+    public async Task<IActionResult> SignUpClientForTrip([FromBody] SignUpClientForTripDTO signUpClientForTripDTO)
+    {
+        try {
+            await service.SignUpClientForTrip(signUpClientForTripDTO);
+            return Ok();
+        } catch (ValidationException e) {
+			return BadRequest(e.Message);
+		} catch (Exception) {
+			return StatusCode(StatusCodes.Status500InternalServerError);
+		}
     }
 }
