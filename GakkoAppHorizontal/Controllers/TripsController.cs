@@ -29,10 +29,10 @@ public class TripsController : ControllerBase
     }
 	
     [HttpPost("{idTrip:int}/clients")]
-    public async Task<IActionResult> SignUpClientForTrip([FromBody] SignUpClientForTripDTO signUpClientForTripDTO)
+    public async Task<IActionResult> SignUpClientForTrip(int idTrip, [FromBody] SignUpClientForTripDTO signUpClientForTripDTO)
     {
         try {
-            await service.SignUpClientForTrip(signUpClientForTripDTO);
+            await service.SignUpClientForTrip(idTrip, signUpClientForTripDTO);
             return Ok();
         } catch (ValidationException e) {
             return BadRequest(e.Message);

@@ -37,7 +37,7 @@ public class TripsService
         return trips;
     }
 	
-	public async Task SignUpClientForTrip(SignUpClientForTripDTO signUpClientForTripDTO)
+	public async Task SignUpClientForTrip(int idTrip, SignUpClientForTripDTO signUpClientForTripDTO)
 	{
         var client = await dbContext.Clients
             .SingleOrDefaultAsync(client => client.Pesel == signUpClientForTripDTO.Pesel);
@@ -55,19 +55,19 @@ public class TripsService
             dbContext.Clients.Add(client);
         } else {
             var clientTrip = await dbContext.ClientTrips
-                .SingleOrDefaultAsync(clientTrip => clientTrip.Trip.IdTrip == signUpClientForTripDTO.IdTrip && clientTrip.Client.IdClient == client.IdClient);
+                .SingleOrDefaultAsync(clientTrip => clientTrip.Trip.IdTrip == idTrip && clientTrip.Client.IdClient == client.IdClient);
             if (clientTrip != null)
                 throw new ValidationException("Client already signed up for this trip");
         }
 
-        var trip = await dbContext.Trips.SingleOrDefaultAsync(trip => trip.IdTrip == signUpClientForTripDTO.IdTrip);
+        var trip = await dbContext.Trips.SingleOrDefaultAsync(trip => trip.IdTrip == idTrip);
         if (trip == null)
             throw new ValidationException("Trip does not exist");
 
         dbContext.ClientTrips.Add(new ClientTrip()
         {
             IdClient = client.IdClient,
-            IdTrip = signUpClientForTripDTO.IdTrip,
+            IdTrip = idTrip,
             RegisteredAt = DateTime.Now,
             PaymentDate = signUpClientForTripDTO.PaymentDate
         });
