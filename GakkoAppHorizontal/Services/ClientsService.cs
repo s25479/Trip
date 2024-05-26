@@ -18,13 +18,13 @@ public class ClientsService
     public async Task DeleteClient(int idClient)
     {
         var client = await dbContext.Clients.SingleOrDefaultAsync(client => client.IdClient == idClient);
-        
+
         if (client == null)
-			throw new ValidationException("Client does not exist");
+            throw new ValidationException("Client does not exist");
 
         if (client.ClientTrips.Count > 0)
             throw new ValidationException("Client has assigned trips");
-        
+
         dbContext.Clients.Remove(client);
         await dbContext.SaveChangesAsync();
     }

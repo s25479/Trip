@@ -21,13 +21,13 @@ public class ClientsController : ControllerBase
     [HttpDelete("{idClient:int}")]
     public async Task<IActionResult> DeleteClient(int idClient)
     {
-		try {
-			await service.DeleteClient(idClient);
-			return NoContent();
-		} catch (ValidationException e) {
-			return BadRequest(e.Message);
-		} catch (Exception) {
-			return StatusCode(StatusCodes.Status500InternalServerError);
-		}
+        try {
+            await service.DeleteClient(idClient);
+            return NoContent();
+        } catch (ValidationException e) {
+            return BadRequest(e.Message);
+        } catch (Exception) {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

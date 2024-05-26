@@ -28,16 +28,16 @@ public class TripsController : ControllerBase
         }
     }
 	
-	[HttpPost("{idTrip:int}/clients")]
+    [HttpPost("{idTrip:int}/clients")]
     public async Task<IActionResult> SignUpClientForTrip([FromBody] SignUpClientForTripDTO signUpClientForTripDTO)
     {
         try {
             await service.SignUpClientForTrip(signUpClientForTripDTO);
             return Ok();
         } catch (ValidationException e) {
-			return BadRequest(e.Message);
-		} catch (Exception) {
-			return StatusCode(StatusCodes.Status500InternalServerError);
-		}
+            return BadRequest(e.Message);
+        } catch (Exception) {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }
