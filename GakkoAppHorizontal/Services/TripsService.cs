@@ -54,8 +54,8 @@ public class TripsService
 
             dbContext.Clients.Add(client);
         } else {
-            var clientTrip = client.ClientTrips
-                .SingleOrDefault(clientTrip => clientTrip.Trip.IdTrip == signUpClientForTripDTO.IdTrip);
+            var clientTrip = await dbContext.ClientTrips
+                .SingleOrDefaultAsync(clientTrip => clientTrip.Trip.IdTrip == signUpClientForTripDTO.IdTrip && clientTrip.Client.IdClient == client.IdClient);
             if (clientTrip != null)
                 throw new ValidationException("Client already signed up for this trip");
         }
