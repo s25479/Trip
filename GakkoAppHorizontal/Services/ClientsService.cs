@@ -17,7 +17,7 @@ public class ClientsService
 
     public async Task DeleteClient(int idClient)
     {
-        var client = await dbContext.Clients.SingleOrDefaultAsync(client => client.IdClient == idClient);
+        var client = await dbContext.Clients.Include(client => client.ClientTrips).SingleOrDefaultAsync(client => client.IdClient == idClient);
 
         if (client == null)
             throw new ValidationException("Client does not exist");
